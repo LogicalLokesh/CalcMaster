@@ -1,5 +1,7 @@
 ﻿# CalcMaster - Your Ultimate Calculating Sidekick 🧮
 
+[![CMake on a Windows](https://github.com/LogicalLokesh/CalcMaster/actions/workflows/cmake-single-platform.yml/badge.svg?branch=main)](https://github.com/LogicalLokesh/CalcMaster/actions/workflows/cmake-single-platform.yml)
+
 Basic Multipurpose cross-platform calculator crafted using modern C and CMake.
 This is the one of my first project I made while I was tinkering with C.
 
