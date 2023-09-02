@@ -6,10 +6,20 @@
 #include <stdio.h>
 
 #include "calc_master.h"
+
+#include <stdlib.h>
+#include <time.h>
+
 #include "menu.h"
 
 int main(void)
 {
+	// wait for 1s to make sure the console is visible.
+	// temporary fix for windows.
+	const clock_t start_time = clock();
+	const clock_t end_time = start_time + (1000 * CLOCKS_PER_SEC / 1000);
+	while (clock() < end_time) {}
+
 	// Display a main menu and performs actions based on the user's choice.
 	while (1)
 	{

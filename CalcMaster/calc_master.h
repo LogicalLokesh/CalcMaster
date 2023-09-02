@@ -5,4 +5,4 @@
 
 #pragma once
 
-#define CALC_VERSION "1.0.0"
+#define CALC_VERSION "1.0.1"
