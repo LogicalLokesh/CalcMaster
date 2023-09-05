@@ -1,6 +1,8 @@
 ﻿# CalcMaster - Your Ultimate Calculating Sidekick 🧮
 
-[![CMake on a Windows](https://github.com/LogicalLokesh/CalcMaster/actions/workflows/cmake-single-platform.yml/badge.svg?branch=main)](https://github.com/LogicalLokesh/CalcMaster/actions/workflows/cmake-single-platform.yml)
+![Public Template](res/CalcMaster-Public-Template.png "CalcMaster")
+
+[![CMake on multiple platforms](https://github.com/LogicalLokesh/CalcMaster/actions/workflows/cmake-multi-platform.yml/badge.svg?branch=main)](https://github.com/LogicalLokesh/CalcMaster/actions/workflows/cmake-multi-platform.yml)
 
 Basic Multipurpose cross-platform calculator crafted using modern C and CMake.
 This is the one of my first project I made while I was tinkering with C.
@@ -43,8 +45,6 @@ This is the one of my first project I made while I was tinkering with C.
 - Subtraction 📊
 - Multiplication 📐
 
-## I may add later 🚀
-
 ### Number Properties
 
 - Is Even 🧙‍♂️
@@ -53,6 +53,8 @@ This is the one of my first project I made while I was tinkering with C.
 - Is Perfect Number 🏆
 - Is Armstrong Number 💪
 - Is Palindrome 🔄
+
+## I may add later 🚀
 
 ### Conversion and More
 
@@ -64,7 +66,6 @@ This is the one of my first project I made while I was tinkering with C.
 - Octal to Decimal 🔄
 - Length Conversion 📏
 - Temperature Conversion ☀️
-- Currency Conversion 💰
 
 ### Random Operations
 

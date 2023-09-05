@@ -7,8 +7,8 @@
 #include <ctype.h>
 #include <stdio.h>
 
-#include "calc_master.h"
 #include "menu.h"
+#include "calc_master.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -147,6 +147,7 @@ void show_categories_menu(void)
 		"Bitwise Operations",
 		"Modulus Operation",
 		"Matrix Operations",
+		"Number Properties",
 		"Exit"
 	};
 
@@ -207,7 +208,12 @@ void show_sub_categories_menu(const char sub_category_choice)
 
 	case 'F':
 		perform_matrix_operations();
-		clear_input_buffer();
+		// wait for user to press enter
+		printf(" Press enter to continue...");
+		PAUSE
+			break;
+	case 'G':
+		find_number_properties();
 		// wait for user to press enter
 		printf(" Press enter to continue...");
 		PAUSE

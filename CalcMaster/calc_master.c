@@ -26,10 +26,10 @@ int main(void)
 		show_categories_menu();
 		const char category_menu_choice = get_valid_categories_menu_choice();
 
-		if (category_menu_choice == 'G')
+		if (category_menu_choice == 'H')
 			break;
 
-		if (category_menu_choice >= 'A' && category_menu_choice <= 'G')
+		if (category_menu_choice >= 'A' && category_menu_choice <= 'H')
 			show_sub_categories_menu(category_menu_choice);
 	}
 

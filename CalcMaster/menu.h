@@ -48,7 +48,7 @@
 	size_t arr_size = sizeof(arr) / sizeof((arr)[0]); \
 	char letter = 'A'; \
 	for (size_t i = 0; i < arr_size; ++i) { \
-		if (i == 0) printf(COLOR_BLUE); \
+		if (i == 0) printf(COLOR_WHITE); \
 		if (i == arr_size - 1) printf(COLOR_RED);\
 		printf(" %c. %s", letter, (arr)[i]); \
 		if (i == arr_size - 1) printf(COLOR_RESET); \

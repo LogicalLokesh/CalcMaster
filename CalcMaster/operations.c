@@ -13,9 +13,43 @@
 
 #include "operations.h"
 
-#include <string.h>
-
 #include "menu.h"
+#include "number_properties.h"
+
+
+/**
+ * Prompts the user for an integer input, validates it, and
+ * returns the valid input.
+ *
+ * @param prompt The prompt is a string that will be displayed to the user to ask for input.
+ * It provides clear instructions on what kind of input is expected.
+ *
+ * @return an integer value.
+ */
+int get_valid_integer_input(const char* prompt)
+{
+	int value;
+
+	while (1)
+	{
+		char input_buffer[256];
+		printf("%s ", prompt);
+		fgets(input_buffer, sizeof(input_buffer), stdin); // NOLINT(cert-err33-c)
+
+		// Convert the input to an integer
+		char* endptr;
+		value = strtol(input_buffer, &endptr, 10);
+
+		// Check for conversion errors and valid input
+		if (endptr == input_buffer || *endptr != '\n' || value < 0)
+			printf(" Invalid input. Please enter a valid positive integer.\n");
+		else
+			break;
+	}
+
+	return value;
+}
+
 
 /**
  * Performs arithmetic operations (addition, subtraction, multiplication, and division) on
@@ -89,7 +123,7 @@ void perform_arithmetic_operations(void)
 	}
 
 	// Accuracy = last two digits after decimal.
-	printf(COLOR_GREEN" Result: %.2lf\n" COLOR_RESET, result);
+	printf(COLOR_GREEN"\n Result: %.2lf\n" COLOR_RESET, result);
 }
 
 /**
@@ -155,7 +189,7 @@ void perform_comparison_operations(void)
 		return;
 	}
 
-	printf(COLOR_GREEN " Result: %d\n" COLOR_RESET, result);
+	printf(COLOR_GREEN "\n Result: %d\n" COLOR_RESET, result);
 }
 
 /**
@@ -184,48 +218,27 @@ void perform_logical_operations(void)
 	{
 	case 1: // AND  // NOLINT(bugprone-branch-clone)
 		printf(" Enter value 1 (0 or 1): ");
-		if (scanf("%d", &input1) == EOF)
-		{
-			PRINT_ERROR("Failed to read input.");
-		}
+		if (scanf("%d", &input1) == EOF) { PRINT_ERROR("Failed to read input."); }
 		printf("  Enter value 2 (0 or 1): ");
-		if (scanf("%d", &input2) == EOF)
-		{
-			PRINT_ERROR("Failed to read input.");
-		}
+		if (scanf("%d", &input2) == EOF) { PRINT_ERROR("Failed to read input."); }
 		break;
 	case 2: // OR
 		printf(" Enter value 1 (0 or 1): ");
-		if (scanf("%d", &input1) == EOF)
-		{
-			PRINT_ERROR("Failed to read input.");
-		}
+		if (scanf("%d", &input1) == EOF) { PRINT_ERROR("Failed to read input."); }
 		printf(" Enter value 2 (0 or 1): ");
-		if (scanf("%d", &input2) == EOF)
-		{
-			PRINT_ERROR("Failed to read input.");
-		}
+		if (scanf("%d", &input2) == EOF) { PRINT_ERROR("Failed to read input."); }
 		break;
 	case 3: // NOT
 		printf(" Enter value (0 or 1): ");
 		printf(" Enter value 1 (0 or 1): ");
-		if (scanf("%d", &input1) == EOF)
-		{
-			PRINT_ERROR("Failed to read input.");
-		}
+		if (scanf("%d", &input1) == EOF) { PRINT_ERROR("Failed to read input."); }
 		input2 = 0;
 		break;
 	case 4: // XOR
 		printf(" Enter value 1 (0 or 1): ");
-		if (scanf("%d", &input1) == EOF)
-		{
-			PRINT_ERROR(" Failed to read input.");
-		}
+		if (scanf("%d", &input1) == EOF) { PRINT_ERROR(" Failed to read input."); }
 		printf(" Enter value 2 (0 or 1): ");
-		if (scanf("%d", &input2) == EOF)
-		{
-			PRINT_ERROR(" Failed to read input.");
-		}
+		if (scanf("%d", &input2) == EOF) { PRINT_ERROR(" Failed to read input."); }
 		break;
 	default:
 		printf(" Invalid operation choice.\n");
@@ -254,7 +267,7 @@ void perform_logical_operations(void)
 		return;
 	}
 
-	printf(COLOR_GREEN" Result: %d\n", result);
+	printf(COLOR_GREEN"\n Result: %d\n", result);
 }
 
 /**
@@ -280,15 +293,9 @@ void perform_bitwise_operations(void)
 
 
 	printf(" Enter value 1 (0 or 1): ");
-	if (scanf("%d", &input1) == EOF)
-	{
-		PRINT_ERROR("Failed to read input.");
-	}
+	if (scanf("%d", &input1) == EOF) { PRINT_ERROR("Failed to read input."); }
 	printf(" Enter value 2 (0 or 1): ");
-	if (scanf("%d", &input2) == EOF)
-	{
-		PRINT_ERROR("Failed to read input.");
-	}
+	if (scanf("%d", &input2) == EOF) { PRINT_ERROR("Failed to read input."); }
 
 	// Sanitize inputs
 	input1 = (input1 != 0) ? 1 : 0;
@@ -305,7 +312,7 @@ void perform_bitwise_operations(void)
 	default:
 		return;
 	}
-	printf(COLOR_RED" Result: %d\n", result);
+	printf(COLOR_RED"\n Result: %d\n", result);
 }
 
 /**
@@ -329,16 +336,10 @@ void perform_modulo_operation(void)
 		int dividend;
 		printf(" Enter dividend: ");
 
-		if (scanf("%d", &dividend) == EOF)
-		{
-			PRINT_ERROR("Failed to read input.");
-		}
+		if (scanf("%d", &dividend) == EOF) { PRINT_ERROR("Failed to read input."); }
 
 		printf(" Enter divisor: ");
-		if (scanf("%d", &divisor) == EOF)
-		{
-			PRINT_ERROR("Failed to read input.");
-		}
+		if (scanf("%d", &divisor) == EOF) { PRINT_ERROR("Failed to read input."); }
 
 		if (divisor == 0)
 		{
@@ -346,183 +347,68 @@ void perform_modulo_operation(void)
 			return;
 		}
 
-		printf(COLOR_GREEN " Result: %d\n", dividend % divisor);
+		printf(COLOR_GREEN "\n Result: %d\n", dividend % divisor);
 		return;
 	}
 
 	printf(" Invalid operation choice.\n");
 }
 
-
 /**
- * Prompts the user for an integer input, validates it, and
- * returns the valid input.
- *
- * @param prompt The prompt is a string that will be displayed to the user to ask for input.
- * It provides clear instructions on what kind of input is expected.
- *
- * @return an integer value.
+ * Allows the user to input a number and choose from a menu of
+ * operations to determine various properties of the number.
  */
-int get_valid_integer_input(const char* prompt) {
-	int value;
-
-	while (1) {
-		char input_buffer[256];
-		printf("%s", prompt);
-		fgets(input_buffer, sizeof(input_buffer), stdin);   // NOLINT(cert-err33-c)
-
-		// Convert the input to an integer
-		char* endptr;
-		value = strtol(input_buffer, &endptr, 10);
-
-		// Check for conversion errors and valid input
-		if (endptr == input_buffer || *endptr != '\n' || value < 0) {
-			printf(" Invalid input. Please enter a valid positive integer.\n");
-		}
-		else {
-			break;
-		}
-	}
-
-	return value;
-}
-
-/**
- * Initializes a matrix by allocating memory for each row and setting all elements to
- * zero.
- *
- * @param matrix The parameter "matrix" is a pointer to a pointer to an integer. It represents a 2D
- * matrix or array.
- * @param rows The number of rows in the matrix.
- * @param columns The "columns" parameter represents the number of columns in the matrix.
- */
-void initialize_matrix(int** matrix, const int rows, const int columns) {
-	for (int i = 0; i < rows; ++i) {
-		matrix[i] = (int*)malloc(columns * sizeof(int));
-		memset(matrix[i], 0, columns * sizeof(int));
-	}
-}
-
-/**
- * Frees the memory allocated for a 2D matrix.
- *
- * @param matrix A pointer to a pointer to an integer. It represents a 2D matrix.
- * @param rows The number of rows in the matrix.
- */
-void free_matrix(int** matrix, const int rows) {
-	for (int i = 0; i < rows; ++i) {
-		free(matrix[i]);
-	}
-	free(matrix);
-}
-
-/**
- * Performs matrix addition, subtraction, or multiplication based on user input.
- */
-void perform_matrix_operations(void)
+void find_number_properties(void)
 {
 	// Build the operations menu and show to the user
 	const char* operations[] = {
-		"Addition",
-		"Subtraction",
-		"Multiplication"
+		"Is Even",
+		"Is Odd",
+		"Is Prime",
+		"Is Perfect Number",
+		"Is Armstrong Number",
+		"Is Palindrome"
 	};
 
-	PRINT_SUB_MENU("Matrix Operations", operations);
+	PRINT_SUB_MENU("Number Properties", operations);
 
 	const int operations_choice = get_valid_operations_menu_choice(sizeof(operations) / sizeof(operations[0]));
+	const int number = get_valid_integer_input(" Enter a number: ");
 
-	if (operations_choice >= 1 && operations_choice <= 3) {
-		const int rows = get_valid_integer_input(" Enter the number of rows: ");
-		const int columns = get_valid_integer_input(" Enter the number of columns: ");
+	switch (operations_choice)
+	{
+	case 1: // Is Even
+		printf(COLOR_GREEN "\n %d %s an even number.\n" COLOR_RESET, number,
+		       is_even(number) ? "is" : "not");
+		break;
 
-		int** matrix1 = malloc(rows * sizeof(int*));
-		int** matrix2 = malloc(rows * sizeof(int*));
-		int** result = malloc(rows * sizeof(int*));
+	case 2: // Is Odd
+		printf(COLOR_GREEN "\n %d %s an odd number.\n" COLOR_RESET, number,
+		       is_odd(number) ? "is" : "not");
+		break;
 
-		initialize_matrix(matrix1, rows, columns);
-		initialize_matrix(matrix2, rows, columns);
-		initialize_matrix(result, rows, columns);
+	case 3: // Is Prime
+		printf(COLOR_GREEN "\n %d %s a prime number.\n" COLOR_RESET, number,
+		       is_prime(number) ? "is" : "not");
+		break;
 
-		// Input for matrix1
-		printf(" Enter elements of matrix 1:\n");
-		for (int i = 0; i < rows; ++i) {
-			for (int j = 0; j < columns; ++j) {
-				matrix1[i][j] = get_valid_integer_input("");
-			}
-		}
+	case 4: // Is Perfect Number
+		printf(COLOR_GREEN "\n %d %s a perfect number.\n" COLOR_RESET, number,
+		       is_perfect_number(number) ? "is" : "not");
+		break;
 
-		// Input for matrix2
-		printf(" Enter elements of matrix 2:\n");
-		for (int i = 0; i < rows; ++i) {
-			for (int j = 0; j < columns; ++j) {
-				matrix2[i][j] = get_valid_integer_input("");
-			}
-		}
+	case 5: // Is Armstrong Number
+		printf(COLOR_GREEN "\n %d %s an Armstrong number.\n" COLOR_RESET, number,
+		       is_armstrong_number(number) ? "is" : "not");
+		break;
 
-		// Perform matrix addition, subtraction, or multiplication operation
-		if (operations_choice == 1) {  // Addition
-			for (int i = 0; i < rows; ++i) {
-				for (int j = 0; j < columns; ++j) {
-					result[i][j] = matrix1[i][j] + matrix2[i][j];
-				}
-			}
-		}
-		else if (operations_choice == 2) {  // Subtraction
-			for (int i = 0; i < rows; ++i) {
-				for (int j = 0; j < columns; ++j) {
-					result[i][j] = matrix1[i][j] - matrix2[i][j];
-				}
-			}
-		}
-		else if (operations_choice == 3) {  // Multiplication
-			for (int i = 0; i < rows; ++i) {
-				for (int j = 0; j < columns; ++j) {
-					result[i][j] = 0;
-					for (int k = 0; k < columns; ++k) {
-						result[i][j] += matrix1[i][k] * matrix2[k][j];
-					}
-				}
-			}
-		}
+	case 6: // Is Palindrome
+		printf(COLOR_GREEN "\n %d %s a Palindrome number.\n" COLOR_RESET, number,
+		       is_palindrome(number) ? "is" : "not");
+		break;
 
-		// Display the matrices
-		printf(COLOR_BLUE " Matrix 1:\n");
-		for (int i = 0; i < rows; ++i) {
-			for (int j = 0; j < columns; ++j) {
-				printf(" %d\t", matrix1[i][j]);
-			}
-			printf("\n");
-		}
-		printf(COLOR_BLUE " Matrix 2:\n");
-		for (int i = 0; i < rows; ++i) {
-			for (int j = 0; j < columns; ++j) {
-				printf(" %d\t", matrix2[i][j]);
-			}
-			printf("\n");
-		}
-
-		// Display the result
-		printf(COLOR_GREEN " Result:\n");
-		for (int i = 0; i < rows; ++i) {
-			for (int j = 0; j < columns; ++j) {
-				printf(" %d\t", result[i][j]);
-			}
-			printf("\n");
-		}
-
-		// Free allocated memory
-		for (int i = 0; i < rows; ++i) {
-			free(matrix1[i]);
-			free(matrix2[i]);
-			free(result[i]);
-		}
-		free(matrix1);
-		free(matrix2);
-		free(result);
-	}
-	else {
+	default:
 		printf(" Invalid operation choice.\n");
+		break;
 	}
-
 }

@@ -3,7 +3,8 @@
 #
 
 # Add source to this project's executable.
-add_executable (CalcMaster "calc_master.c" "calc_master.h" "menu.h" "menu.c" "operations.c" "operations.h" )
+add_executable (CalcMaster "calc_master.c" "calc_master.h" "menu.h" "menu.c" "operations.c" "operations.h"  
+"number_properties.c" "number_properties.h" "matrix_operations.c" "matrix_operations.h")
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
