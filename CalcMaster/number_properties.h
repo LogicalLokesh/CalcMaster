@@ -7,6 +7,10 @@
 
 #include <stdbool.h>
 
+#include "calc_master.h"
+
+enum operation_return_reason find_number_properties(void);
+
 bool is_even(int number);
 bool is_odd(int number);
 bool is_prime(int number);

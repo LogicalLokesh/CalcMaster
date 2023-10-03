@@ -13,6 +13,7 @@
 
 #include "operations.h"
 
+#include "calc_master.h"
 #include "menu.h"
 #include "number_properties.h"
 
@@ -55,9 +56,9 @@ int get_valid_integer_input(const char* prompt)
  * Performs arithmetic operations (addition, subtraction, multiplication, and division) on
  * a given set of numbers and displays the result with two decimal places.
  *
- * @return The function does not have a return type specified, so it is returning nothing (void).
+ * @return operation_return_reason
  */
-void perform_arithmetic_operations(void)
+enum operation_return_reason perform_arithmetic_operations(void)
 {
 	// Build the operations menu and show to the user
 	const char* operations[] = {
@@ -71,12 +72,18 @@ void perform_arithmetic_operations(void)
 
 	const int operations_choice = get_valid_operations_menu_choice(sizeof(operations) / sizeof(operations[0]));
 
+	if (operations_choice == 0)
+	{
+		printf(" Press enter to go back...");
+		return return_reason_user_exit;
+	}
+
 	int num_count;
 	printf(" Enter the number of values: ");
 	if (scanf("%d", &num_count) != 1 || num_count <= 0)
 	{
 		printf(" Invalid input for the number of values.\n");
-		return;
+		return return_reason_error;
 	}
 
 	double result, num;
@@ -85,7 +92,7 @@ void perform_arithmetic_operations(void)
 	if (scanf("%lf", &result) != 1)
 	{
 		printf(" Invalid input for value 1.\n");
-		return;
+		return return_reason_error;
 	}
 
 	for (int i = 1; i < num_count; ++i)
@@ -94,7 +101,7 @@ void perform_arithmetic_operations(void)
 		if (scanf("%lf", &num) != 1)
 		{
 			printf(" Invalid input for value %d.\n", i + 1);
-			return;
+			return return_reason_error;
 		}
 
 		switch (operations_choice)
@@ -112,26 +119,28 @@ void perform_arithmetic_operations(void)
 			if ((int)num == 0)
 			{
 				printf(COLOR_RED " You can't handle the truth!\n" COLOR_RESET);
-				return;
+				return return_reason_error;
 			}
 			result /= num;
 			break;
 		default:
 			printf(" Invalid operation choice.\n");
-			return;
+			return return_reason_error;
 		}
 	}
 
 	// Accuracy = last two digits after decimal.
 	printf(COLOR_GREEN"\n Result: %.2lf\n" COLOR_RESET, result);
+
+	return return_reason_success;
 }
 
 /**
  * Performs various comparison operations on two input values and prints the result.
  *
- * @return The function does not have a return type specified, so it is returning void.
+ * @return operation_return_reason
  */
-void perform_comparison_operations(void)
+enum operation_return_reason perform_comparison_operations(void)
 {
 	// Build the operations menu and show
 	const char* operations[] = {
@@ -147,19 +156,26 @@ void perform_comparison_operations(void)
 
 	const int operations_choice = get_valid_operations_menu_choice(sizeof(operations) / sizeof(operations[0]));
 
+	// check if user want to go back
+	if (operations_choice == 0)
+	{
+		printf(" Press enter to go back...");
+		return return_reason_user_exit;
+	}
+
 	double num1, num2;
 	printf(" Enter value 1: ");
 	if (scanf("%lf", &num1) != 1)
 	{
 		printf(" Invalid input for value 1.\n");
-		return;
+		return return_reason_error;
 	}
 
 	printf(" Enter value 2: ");
 	if (scanf("%lf", &num2) != 1)
 	{
 		printf(" Invalid input for value 2.\n");
-		return;
+		return return_reason_error;
 	}
 
 	int result;
@@ -186,20 +202,21 @@ void perform_comparison_operations(void)
 		break;
 	default:
 		printf(" Invalid operation choice.\n");
-		return;
+		return return_reason_error;
 	}
 
 	printf(COLOR_GREEN "\n Result: %d\n" COLOR_RESET, result);
+
+	return return_reason_success;
 }
 
 /**
  * Performs logical operations (AND, OR, NOT, XOR) on two input values and prints the
  * result.
  *
- * @return The function does not have a return type specified, so it does not explicitly return a
- * value.
+ * @return operation_return_reason
  */
-void perform_logical_operations(void)
+enum operation_return_reason perform_logical_operations(void)
 {
 	const char* operations[] = {
 		"AND",
@@ -211,6 +228,14 @@ void perform_logical_operations(void)
 	PRINT_SUB_MENU("Logical Operations", operations);
 
 	const int operations_choice = get_valid_operations_menu_choice(sizeof(operations) / sizeof(operations[0]));
+
+	// check if user want to go back
+	if (operations_choice == 0)
+	{
+		printf(" Press enter to go back...");
+		return return_reason_user_exit;
+	}
+
 
 	int input1, input2, result;
 
@@ -242,7 +267,7 @@ void perform_logical_operations(void)
 		break;
 	default:
 		printf(" Invalid operation choice.\n");
-		return;
+		return return_reason_error;
 	}
 
 	// Sanitize inputs
@@ -264,21 +289,21 @@ void perform_logical_operations(void)
 		result = (input1 || input2) && !(input1 && input2);
 		break;
 	default:
-		return;
+		return return_reason_error;
 	}
 
 	printf(COLOR_GREEN"\n Result: %d\n", result);
+
+	return return_reason_success;
 }
 
 /**
  * Performs bitwise operations (left shift and right shift) on two input values and prints
  * the result.
  *
- * @return The function does not explicitly return a value. It has a default case in the switch
- * statement that returns, but there is no return statement for the other cases. Therefore, the
- * function will implicitly return without a value.
+ * @return operation_return_reason
  */
-void perform_bitwise_operations(void)
+enum operation_return_reason perform_bitwise_operations(void)
 {
 	const char* operations[] = {
 		"Left Shift",
@@ -289,8 +314,14 @@ void perform_bitwise_operations(void)
 
 	const int operations_choice = get_valid_operations_menu_choice(sizeof(operations) / sizeof(operations[0]));
 
-	int input1, input2, result;
+	// check if user want to go back
+	if (operations_choice == 0)
+	{
+		printf(" Press enter to go back...");
+		return return_reason_user_exit;
+	}
 
+	int input1, input2, result;
 
 	printf(" Enter value 1 (0 or 1): ");
 	if (scanf("%d", &input1) == EOF) { PRINT_ERROR("Failed to read input."); }
@@ -310,17 +341,18 @@ void perform_bitwise_operations(void)
 		result = input1 >> input2;
 		break;
 	default:
-		return;
+		return return_reason_error;
 	}
 	printf(COLOR_RED"\n Result: %d\n", result);
+	return return_reason_success;
 }
 
 /**
  * Performs a modulo operation on two user-inputted integers.
  *
- * @return void, which means it is not returning any value.
+ * @return operation_return_reason
  */
-void perform_modulo_operation(void)
+enum operation_return_reason perform_modulo_operation(void)
 {
 	const char* operations[] = {
 		"Modulo"
@@ -329,6 +361,13 @@ void perform_modulo_operation(void)
 	PRINT_SUB_MENU("Modulo Operations", operations);
 
 	const int operations_choice = get_valid_operations_menu_choice(sizeof(operations) / sizeof(operations[0]));
+
+	// check if user want to go back
+	if (operations_choice == 0)
+	{
+		printf(" Press enter to go back...");
+		return return_reason_user_exit;
+	}
 
 	if (operations_choice == 1)
 	{
@@ -344,21 +383,24 @@ void perform_modulo_operation(void)
 		if (divisor == 0)
 		{
 			printf(" Error: You need glasses!\n");
-			return;
+			return return_reason_error;
 		}
 
 		printf(COLOR_GREEN "\n Result: %d\n", dividend % divisor);
-		return;
+		return return_reason_success;
 	}
 
 	printf(" Invalid operation choice.\n");
+	return return_reason_error;
 }
 
 /**
  * Allows the user to input a number and choose from a menu of
  * operations to determine various properties of the number.
+ *
+ * @return operation_return_reason
  */
-void find_number_properties(void)
+enum operation_return_reason find_number_properties(void)
 {
 	// Build the operations menu and show to the user
 	const char* operations[] = {
@@ -373,6 +415,14 @@ void find_number_properties(void)
 	PRINT_SUB_MENU("Number Properties", operations);
 
 	const int operations_choice = get_valid_operations_menu_choice(sizeof(operations) / sizeof(operations[0]));
+
+	// check if user want to go back
+	if (operations_choice == 0)
+	{
+		printf(" Press enter to go back...");
+		return return_reason_user_exit;
+	}
+
 	const int number = get_valid_integer_input(" Enter a number: ");
 
 	switch (operations_choice)
@@ -409,6 +459,7 @@ void find_number_properties(void)
 
 	default:
 		printf(" Invalid operation choice.\n");
-		break;
+		return return_reason_error;
 	}
+	return return_reason_success;
 }

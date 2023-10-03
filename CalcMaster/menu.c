@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "matrix_operations.h"
+#include "number_properties.h"
 #include "operations.h"
 
 /**
@@ -89,7 +91,7 @@ int get_valid_operations_menu_choice(const int max_operations_available)
 
 	while (1)
 	{
-		printf(" Enter your choice: ");
+		printf(" Enter your choice or 0 to go back: ");
 		if (fgets(input, sizeof(input), stdin) == NULL)
 		{
 			printf(" Error reading input.\n");
@@ -122,7 +124,7 @@ int get_valid_operations_menu_choice(const int max_operations_available)
 		choice = atoi(input);
 
 		// Check if the choice is within the valid range
-		if (choice < 1 || choice > max_operations_available)
+		if (choice < 0 || choice > max_operations_available)
 		{
 			printf(" Invalid choice. Please enter a number between 1 and %d.\n", max_operations_available);
 			continue;
@@ -164,10 +166,28 @@ void show_categories_menu(void)
  */
 void show_sub_categories_menu(const char sub_category_choice)
 {
+	enum operation_return_reason result;
+
 	switch (sub_category_choice)
 	{
 	case 'A':
-		perform_arithmetic_operations();
+		result = perform_arithmetic_operations();
+
+		if (result == return_reason_user_exit)
+		{
+			clear_input_buffer();
+			break;
+		}
+
+		if (result == return_reason_error)
+		{
+			printf(" Press enter to continue...");
+			PAUSE
+				clear_input_buffer();
+			break;
+		}
+
+
 		clear_input_buffer();
 		// wait for user to press enter
 		printf(" Press enter to continue...");
@@ -175,7 +195,22 @@ void show_sub_categories_menu(const char sub_category_choice)
 			break;
 
 	case 'B':
-		perform_comparison_operations();
+		result = perform_comparison_operations();
+
+		if (result == return_reason_user_exit)
+		{
+			clear_input_buffer();
+			break;
+		}
+
+		if (result == return_reason_error)
+		{
+			printf(" Press enter to continue...");
+			PAUSE
+				clear_input_buffer();
+			break;
+		}
+
 		clear_input_buffer();
 		// wait for user to press enter
 		printf(" Press enter to continue...");
@@ -183,7 +218,21 @@ void show_sub_categories_menu(const char sub_category_choice)
 			break;
 
 	case 'C':
-		perform_logical_operations();
+		result = perform_logical_operations();
+
+		if (result == return_reason_user_exit)
+		{
+			clear_input_buffer();
+			break;
+		}
+
+		if (result == return_reason_error)
+		{
+			printf(" Press enter to continue...");
+			PAUSE
+				clear_input_buffer();
+			break;
+		}
 		clear_input_buffer();
 		// wait for user to press enter
 		printf(" Press enter to continue...");
@@ -191,7 +240,22 @@ void show_sub_categories_menu(const char sub_category_choice)
 			break;
 
 	case 'D':
-		perform_bitwise_operations();
+		result = perform_bitwise_operations();
+
+		if (result == return_reason_user_exit)
+		{
+			clear_input_buffer();
+			break;
+		}
+
+		if (result == return_reason_error)
+		{
+			printf(" Press enter to continue...");
+			PAUSE
+				clear_input_buffer();
+			break;
+		}
+
 		clear_input_buffer();
 		// wait for user to press enter
 		printf(" Press enter to continue...");
@@ -199,7 +263,22 @@ void show_sub_categories_menu(const char sub_category_choice)
 			break;
 
 	case 'E':
-		perform_modulo_operation();
+		result = perform_modulo_operation();
+
+		if (result == return_reason_user_exit)
+		{
+			clear_input_buffer();
+			break;
+		}
+
+		if (result == return_reason_error)
+		{
+			printf(" Press enter to continue...");
+			PAUSE
+				clear_input_buffer();
+			break;
+		}
+
 		clear_input_buffer();
 		// wait for user to press enter
 		printf(" Press enter to continue...");
@@ -207,13 +286,43 @@ void show_sub_categories_menu(const char sub_category_choice)
 			break;
 
 	case 'F':
-		perform_matrix_operations();
+		result = perform_matrix_operations();
+
+		if (result == return_reason_user_exit)
+		{
+			clear_input_buffer();
+			break;
+		}
+
+		if (result == return_reason_error)
+		{
+			printf(" Press enter to continue...");
+			PAUSE
+				clear_input_buffer();
+			break;
+		}
+
 		// wait for user to press enter
 		printf(" Press enter to continue...");
 		PAUSE
 			break;
 	case 'G':
-		find_number_properties();
+		result = find_number_properties();
+
+		if (result == return_reason_user_exit)
+		{
+			clear_input_buffer();
+			break;
+		}
+
+		if (result == return_reason_error)
+		{
+			printf(" Press enter to continue...");
+			PAUSE
+				clear_input_buffer();
+			break;
+		}
+
 		// wait for user to press enter
 		printf(" Press enter to continue...");
 		PAUSE

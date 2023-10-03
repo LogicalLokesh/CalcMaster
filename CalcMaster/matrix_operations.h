@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "calc_master.h"
+
 void initialize_matrix(int** matrix, int rows, int columns);
 void free_matrix(int** matrix, int rows);
-void perform_matrix_operations(void);
+enum operation_return_reason perform_matrix_operations(void);

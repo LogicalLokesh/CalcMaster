@@ -5,7 +5,6 @@
 
 #include "number_properties.h"
 
-#include <math.h>
 #include <stdbool.h>
 
 
@@ -67,9 +66,7 @@ bool is_armstrong_number(const int number)
 		// Calculate remainder raised to the power of num_digits
 		int temp = 1;
 		for (int i = 0; i < num_digits; ++i)
-		{
 			temp *= remainder;
-		}
 
 		result += temp;
 		original_number /= 10;

@@ -5,13 +5,12 @@
 
 #pragma once
 
+#include "calc_master.h"
+
 int get_valid_integer_input(const char* prompt);
 
-void perform_arithmetic_operations(void);
-void perform_comparison_operations(void);
-void perform_logical_operations(void);
-void perform_bitwise_operations(void);
-void perform_modulo_operation(void);
-
-void perform_matrix_operations(void);
-void find_number_properties(void);
+enum operation_return_reason perform_arithmetic_operations(void);
+enum operation_return_reason perform_comparison_operations(void);
+enum operation_return_reason perform_logical_operations(void);
+enum operation_return_reason perform_bitwise_operations(void);
+enum operation_return_reason perform_modulo_operation(void);
